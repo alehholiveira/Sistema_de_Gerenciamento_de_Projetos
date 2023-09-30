@@ -1,15 +1,15 @@
 #ifndef FILA_H_INCLUDED
 #define FILA_H_INCLUDED
 
-/* FUNÇÕES DE MANIPULAÇÃO DE PFILA
+/* FUNÃ‡Ã•ES DE MANIPULAÃ‡ÃƒO DE PFILA
 
 Fila* CriaFila()  CRIA A FILA
 
-int VaziaFila (Fila* f) VERIFICA SE A FILA ESTÁ VAIZA
+int VaziaFila (Fila* f) VERIFICA SE A FILA ESTÃ VAIZA
 
-void InsereFila (Fila* f, int v) INSERÇÃO
+void InsereFila (Fila* f, int v) INSERÃ‡ÃƒO
 
-int RetiraFila (Fila* f) REMOÇÃO
+int RetiraFila (Fila* f) REMOÃ‡ÃƒO
 
 Fila* liberaFila (Fila* f) LIBERA A FILA
 
@@ -45,6 +45,29 @@ typedef struct fila
     No * fim;
 } Fila;
 
+typedef struct listaConcluidas
+{
+    Tarefa info2;
+    struct listaConcluidas* prox2;
+} ListaConcluidas;
+
+ListaConcluidas* criaListaConcluida()
+{
+    return NULL;
+}
+
+ListaConcluidas* insereListaConcluida(Tarefa t, ListaConcluidas* l)
+{
+    ListaConcluidas* aux = (ListaConcluidas*) malloc (sizeof(ListaConcluidas));
+
+    if (aux != NULL)
+    {
+        aux->info2 = t;
+        aux->prox2 = l;
+    }
+    return aux;
+}
+
 int VaziaFila (Fila* f)
 {
     if (f->ini==NULL) return 1;
@@ -65,7 +88,7 @@ No* ins_fim (No* fim, Tarefa A)
     No* p = (No*) malloc(sizeof(No));
     p->info = A;
     p->prox = NULL;
-    if (fim != NULL) /* verifica se lista não estava vazia */
+    if (fim != NULL) /* verifica se lista nÃ£o estava vazia */
     fim->prox = p;
     return p;
 }
@@ -114,11 +137,11 @@ void imprimeFila(Fila* f)
     printf("\n\t\t");
     for (q = f->ini; q != NULL; q = q->prox)
     {
-        printf("Código: %d\n", q->info.codigo);
+        printf("Codigo: %d\n", q->info.codigo);
         printf("Nome: %s\n", q->info.nome);
         printf("Nome do Projeto: %s\n", q->info.nomeprojeto);
-        printf("Data de Início: %d/%d/%d\n", q->info.inicio.dia, q->info.inicio.mes, q->info.inicio.ano);
-        printf("Data de Término: %d/%d/%d\n", q->info.termino.dia, q->info.termino.mes, q->info.termino.ano);
+        printf("Data de InÃ­cio: %d/%d/%d\n", q->info.inicio.dia, q->info.inicio.mes, q->info.inicio.ano);
+        printf("Data de TÃ©rmino: %d/%d/%d\n", q->info.termino.dia, q->info.termino.mes, q->info.termino.ano);
         printf("Status: %d\n", q->info.status);
         printf("\n");
     }
