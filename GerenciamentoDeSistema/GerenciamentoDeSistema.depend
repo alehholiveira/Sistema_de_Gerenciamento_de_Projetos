@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1695057243 source:c:\users\22000290\documents\projetoed\gerenciamentodesistema\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<windows.h>
+	"FILA.h"
+
+1695058540 c:\users\22000290\documents\projetoed\gerenciamentodesistema\fila.h
+
