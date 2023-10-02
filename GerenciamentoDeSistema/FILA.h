@@ -33,6 +33,7 @@ typedef struct tarefa
 } Tarefa;
 
 
+
 typedef struct nos
 {
     Tarefa info;
@@ -146,6 +147,38 @@ void imprimeFila(Fila* f)
         printf("\n");
     }
     printf("\n");
+}
+
+void VerificaStatus (ListaConcluidas* f)
+{
+    ListaConcluidas *temp = f;
+
+    printf("\nCódigo das Tarefas com atraso: ");
+    while(temp != NULL)
+    {
+
+        if(temp->info2.status == 1)
+        {
+            printf(" %d", temp->info2.codigo);
+        }
+        temp = temp->prox2;
+    }
+
+    printf("\nCódigo das Tarefas em dia: ");
+    ListaConcluidas *aux = f;
+
+    while(aux != NULL)
+    {
+
+        if(aux->info2.status == 0)
+        {
+            printf(" %d", aux->info2.codigo);
+        }
+        aux = aux->prox2;
+    }
+
+    printf("\n");
+
 }
 
 

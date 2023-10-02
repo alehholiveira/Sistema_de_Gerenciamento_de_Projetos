@@ -12,17 +12,19 @@ void aguardarEnter() {
 void menu()
 {
     system("cls");
-    printf("\t\tBEM-VINDO AO SISTEMA DE GERENCIAMENTO DE PROJETOS\n");
-    printf(" QUAL OPCAO DESEJA UTILZAR?: \n");
-    printf("   [1] Adicionar Tarefa\n");
-    printf("   [2] Modificar uma tarefa\n");
-    printf("   [3] Concluir uma tarefa\n");
-    printf("   [4] Atualizar status de uma tarefa\n");
-    printf("   [5] Listar tarefas pendentes\n");
-    printf("   [6] Listar tarefas concluidas\n");
-    printf("   [7] Listar tarefas concluidas com ou sem atrasos\n");
-    printf("   [8] Sair do programa");
-    printf("\n\n Digite aqui sua opcao: ");
+    printf(" _______________________________________________________ \n");
+    printf("| BEM-VINDO AO SISTEMA DE GERENCIAMENTO DE PROJETOS \t|\n");
+    printf("| QUAL OPCAO DESEJA UTILZAR?:                        \t|      \n");
+    printf("|   [1] Adicionar Tarefa                             \t|      \n");
+    printf("|   [2] Modificar uma tarefa                         \t|      \n");
+    printf("|   [3] Concluir uma tarefa                          \t|      \n");
+    printf("|   [4] Atualizar status de uma tarefa               \t|      \n");
+    printf("|   [5] Listar tarefas pendentes                     \t|      \n");
+    printf("|   [6] Listar tarefas concluidas                    \t|      \n");
+    printf("|   [7] Listar tarefas concluidas com ou sem atrasos \t|      \n");
+    printf("|   [8] Sair do programa                             \t|      \n");
+    printf(" ------------------------------------------------------- ");
+    printf("\n\n -> Digite aqui sua opcao: ");
 }
 
 Tarefa LerTarefa()
@@ -38,10 +40,10 @@ Tarefa LerTarefa()
     printf("Digite o nome do projeto: ");
     scanf("%s", t.nomeprojeto); // Use scanf com %s para ler strings
 
-    printf("Digite a data de Inicio (dia mes ano): ");
+    printf("Digite a data de Inicio (dia mes ano):\n ");
     scanf("%d %d %d", &t.inicio.dia, &t.inicio.mes, &t.inicio.ano);
 
-    printf("Digite a data de termino (dia mes ano): ");
+    printf("Digite a data de termino (dia mes ano):\n ");
     scanf("%d %d %d", &t.termino.dia, &t.termino.mes, &t.termino.ano);
 
     time_t tempo_atual;
@@ -146,7 +148,7 @@ void ConcluiTarefa (Fila* f, ListaConcluidas** l)
                 novoConcluida->prox2 = *l;
                 *l = novoConcluida;
                 printf("Tarefa concluída e movida para a lista de tarefas concluídas.\n");
-                free(aux);
+
             }
 
             else
@@ -209,7 +211,6 @@ void atualizaTarefa(ListaConcluidas** l, Fila* f)
                 novoPendente->prox2 = *l;
                 *l = novoPendente;
                 printf("Tarefa concluída e movida para a lista de tarefas concluídas.\n");
-                free(aux);
             }
             else
             {
@@ -220,7 +221,6 @@ void atualizaTarefa(ListaConcluidas** l, Fila* f)
         aux2 = aux;
         aux = aux->prox;
     }
-
 }
 
 int main()
@@ -234,7 +234,6 @@ int main()
 
     do{
     menu();
-    imprimeFila(minhaFila);
 
 
     scanf("%d",&opcao);
@@ -275,6 +274,8 @@ int main()
         break;
 
     case 7:
+        VerificaStatus(concluida);
+        aguardarEnter();
         break;
 
     case 8:
@@ -284,5 +285,8 @@ int main()
         printf("Opcao Invalida");
     }
     }while (opcao != 8);
+
+    printf("\n Fim do Programa!!");
+
     return 0;
 }
