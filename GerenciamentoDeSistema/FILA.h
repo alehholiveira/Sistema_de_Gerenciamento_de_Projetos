@@ -131,6 +131,27 @@ Tarefa RetiraTarefa(Fila* f)
         f->fim = NULL;
     return t;
 }
+void removeListaConcluida(ListaConcluidas** lista, int codigo) {
+    ListaConcluidas* temp = *lista;
+    ListaConcluidas* prev = NULL;
+
+    // Encontrar o item na lista
+    while (temp != NULL && temp->info2.codigo != codigo) {
+        prev = temp;
+        temp = temp->prox2;
+    }
+
+    // Se o item foi encontrado, removê-lo da lista
+    if (temp != NULL) {
+        if (prev != NULL) {
+            prev->prox2 = temp->prox2;
+        } else {
+            *lista = temp->prox2;
+        }
+        free(temp);
+    }
+}
+
 
 void imprimeFila(Fila* f)
 {
