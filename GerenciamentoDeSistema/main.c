@@ -11,6 +11,7 @@ void aguardarEnter() {
 
 void menu()
 {
+
     system("cls");
     printf(" _______________________________________________________ \n");
     printf("| BEM-VINDO AO SISTEMA DE GERENCIAMENTO DE PROJETOS \t|\n");
@@ -165,9 +166,9 @@ void ConcluiTarefa (Fila* f, ListaConcluidas** l)
 
 void imprimeConcluida (ListaConcluidas* l)
 {
+
     ListaConcluidas* q = l;
     printf("\n\t\t");
-    printf("Lista pendente");
     while (q != NULL)
     {
         printf("Codigo: %d\n", q->info2.codigo);
@@ -181,47 +182,44 @@ void imprimeConcluida (ListaConcluidas* l)
     }
     printf("\n");
 }
-
-void atualizaTarefa(ListaConcluidas** l, Fila* f)
-{
-    int codigo;
+void atualizaTarefa(ListaConcluidas** l, Fila* f, int codigo) {
     No *aux = f->ini;
-    No *aux2 = NULL;
-    printf("Digite o codigo da tarefa em que deseja atualizar o status: ");
-    scanf("%d", &codigo);
 
     while (aux != NULL) {
         if (aux->info.codigo == codigo) {
-            printf("Qual sera o status dessa tarefa (0 para em dia, -1 para pendente: ");
+            printf("Qual sera o novo status dessa tarefa (0 para em dia, -1 para pendente): ");
             scanf("%d", &aux->info.status);
-            if(aux->info.status == -1)
-            {
-                if (aux2 == NULL)
-                {
-                    f->ini = aux->prox;
-                } else
-                {
-                    aux2->prox = aux->prox;
-                }
 
-            ListaConcluidas* novoPendente = insereListaConcluida(aux->info, *l);
-            if (novoPendente != NULL)
-            {
-                novoPendente->info2 = aux->info;
-                novoPendente->prox2 = *l;
-                *l = novoPendente;
-                printf("Tarefa concluída e movida para a lista de tarefas concluídas.\n");
+            // Verificar o novo status e mover a tarefa para a lista certa
+            if (aux->info.status == -1) {
+                // Mover para a lista de tarefas pendentes 
+                ListaConcluidas* novoPendente = insereListaConcluida(aux->info, *l);
+                if (novoPendente != NULL) {
+                    novoPendente->prox2 = *l;
+                    *l = novoPendente;
+                    printf("Tarefa marcada como pendente e movida para a Lista de tarefas pendentes.\n");
+                } else {
+                    printf("Erro ao alocar memória para o novo nodo pendente.\n");
+                }
+            } else if (aux->info.status == 0) {
+                // Mover de volta para a fila original
+                InsereTarefa(f, aux->info.codigo, aux->info.nome, aux->info.nomeprojeto,
+                              aux->info.inicio, aux->info.termino, aux->info.status);
+
+                printf("Tarefa movida de volta para a fila original.\n");
+            } else {
+                printf("Status inválido. A tarefa não foi movida.\n");
             }
-            else
-            {
-                printf("Erro ao alocar memória para o novo nodo concluído.\n");
-            }
-            }
+
         }
-        aux2 = aux;
         aux = aux->prox;
     }
+
+    // Se o Codigo da tarefa não foi encontrado
+    printf("Tarefa com o código %d não encontrada na fila.\n", codigo);
 }
+
+
 
 int main()
 {
@@ -246,6 +244,7 @@ int main()
         novaTarefa = LerTarefa();
         InsereTarefa(minhaFila, novaTarefa.codigo, novaTarefa.nome, novaTarefa.nomeprojeto,
         novaTarefa.inicio, novaTarefa.termino, novaTarefa.status);
+         aguardarEnter();
 
         break;
 
@@ -253,22 +252,29 @@ int main()
         printf("Digite o codigo da tarefa que deseja modificar: ");
         scanf("%d", &codigo);
         modificarTarefa(minhaFila, codigo);
+         aguardarEnter();
         break;
 
     case 3:
         ConcluiTarefa(minhaFila, &concluida);
+         aguardarEnter();
         break;
 
     case 4:
-        atualizaTarefa(&pendente, minhaFila);
+       printf("Digite o codigo da tarefa em que deseja atualizar o status: ");
+        scanf("%d", &codigo);
+        atualizaTarefa(&pendente,minhaFila,codigo);
+         aguardarEnter();
         break;
 
     case 5:
+        printf("\nLista pendente");
         imprimeConcluida(pendente);
         aguardarEnter();
         break;
 
     case 6:
+    printf("\nLista Concluida:");
         imprimeConcluida(concluida);
         aguardarEnter();
         break;
