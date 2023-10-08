@@ -185,14 +185,20 @@ void imprimeConcluida (ListaConcluidas* l)
 void atualizaTarefa(ListaConcluidas** l, Fila* f)
 {
     int codigo;
+    int option;
+
     No *aux = f->ini;
     No *aux2 = NULL;
+
+    ListaConcluidas *aux3 = *l;
+    ListaConcluidas *aux4 = NULL;
+
     printf("Digite o codigo da tarefa em que deseja atualizar o status: ");
     scanf("%d", &codigo);
 
     while (aux != NULL) {
         if (aux->info.codigo == codigo) {
-            printf("Qual sera o status dessa tarefa (0 para em dia, -1 para pendente: ");
+            printf("Qual sera o status dessa tarefa (0 para em dia, -1 para pendente): ");
             scanf("%d", &aux->info.status);
             if(aux->info.status == -1)
             {
@@ -210,7 +216,7 @@ void atualizaTarefa(ListaConcluidas** l, Fila* f)
                 novoPendente->info2 = aux->info;
                 novoPendente->prox2 = *l;
                 *l = novoPendente;
-                printf("Tarefa concluída e movida para a lista de tarefas concluídas.\n");
+                printf("Tarefa concluída e movida para a lista de tarefas pendentes.\n");
             }
             else
             {
@@ -220,6 +226,29 @@ void atualizaTarefa(ListaConcluidas** l, Fila* f)
         }
         aux2 = aux;
         aux = aux->prox;
+    }
+
+     while (aux3 != NULL) {
+        if (aux3->info2.codigo == codigo) {
+            printf("Deseja retornar esta tarefa para a fila de tarefas (1 para sim e 0 para nao): ");
+            scanf("%d", &option);
+            if (option == 1) {
+                Tarefa tarefa_temporaria = aux3->info2;
+                tarefa_temporaria.status = 0; // Defina o status como 0 (pendente)
+                InsereTarefa(f, tarefa_temporaria.codigo, tarefa_temporaria.nome, tarefa_temporaria.nomeprojeto,
+                             tarefa_temporaria.inicio, tarefa_temporaria.termino, tarefa_temporaria.status);
+
+                if (aux4 == NULL) {
+                    // O elemento a ser removido é o primeiro da lista
+                    *l = aux3->prox2;
+                } else {
+                    aux4->prox2 = aux3->prox2;
+                }
+                free(aux3);
+            }
+        }
+        aux4 = aux3;
+        aux3 = aux3->prox2;
     }
 }
 
@@ -234,6 +263,7 @@ int main()
 
     do{
     menu();
+    imprimeFila(minhaFila);
 
 
     scanf("%d",&opcao);
@@ -287,6 +317,5 @@ int main()
     }while (opcao != 8);
 
     printf("\n Fim do Programa!!");
-
     return 0;
 }
