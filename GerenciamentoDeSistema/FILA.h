@@ -30,6 +30,7 @@ typedef struct tarefa
     Data inicio;
     Data termino;
     int status;
+    int prioridade;
 } Tarefa;
 
 
@@ -94,7 +95,7 @@ No* ins_fim (No* fim, Tarefa A)
     return p;
 }
 
-void InsereTarefa(Fila* f, int codigo, const char* nome, const char* nomeprojeto, Data inicio, Data termino, int status)
+void InsereTarefa(Fila* f, int codigo, const char* nome, const char* nomeprojeto, Data inicio, Data termino, int status, int prioridade)
 {
     Tarefa t;
     t.codigo = codigo;
@@ -103,6 +104,7 @@ void InsereTarefa(Fila* f, int codigo, const char* nome, const char* nomeprojeto
     t.inicio = inicio;
     t.termino = termino;
     t.status = status;
+    t.prioridade = prioridade;
 
     f->fim = ins_fim(f->fim, t);
     if (f->ini == NULL) /* fila antes vazia? */
@@ -131,40 +133,33 @@ Tarefa RetiraTarefa(Fila* f)
         f->fim = NULL;
     return t;
 }
-void removeListaConcluida(ListaConcluidas** lista, int codigo) {
-    ListaConcluidas* temp = *lista;
-    ListaConcluidas* prev = NULL;
-
-    // Encontrar o item na lista
-    while (temp != NULL && temp->info2.codigo != codigo) {
-        prev = temp;
-        temp = temp->prox2;
-    }
-
-    // Se o item foi encontrado, removê-lo da lista
-    if (temp != NULL) {
-        if (prev != NULL) {
-            prev->prox2 = temp->prox2;
-        } else {
-            *lista = temp->prox2;
-        }
-        free(temp);
-    }
-}
-
 
 void imprimeFila(Fila* f)
 {
     No* q;
     printf("\n\t\t");
+
     for (q = f->ini; q != NULL; q = q->prox)
     {
+        if (q->info.prioridade == 1)
+        {
+            printf("Tarefas de Prioridade Alta");
+        }
+        if (q->info.prioridade == 2)
+        {
+            printf("Tarefas de Prioridade Normal");
+        }
+        if (q->info.prioridade == 3)
+        {
+            printf("Tarefas de Prioridade Baixa");
+        }
         printf("Codigo: %d\n", q->info.codigo);
         printf("Nome: %s\n", q->info.nome);
         printf("Nome do Projeto: %s\n", q->info.nomeprojeto);
         printf("Data de Início: %d/%d/%d\n", q->info.inicio.dia, q->info.inicio.mes, q->info.inicio.ano);
         printf("Data de Término: %d/%d/%d\n", q->info.termino.dia, q->info.termino.mes, q->info.termino.ano);
         printf("Status: %d\n", q->info.status);
+        printf("Prioridade: %d\n", q->info.prioridade);
         printf("\n");
     }
     printf("\n");
@@ -216,5 +211,7 @@ Fila* liberaFila (Fila* f)
     free(f);
     return NULL;
 }
+
+
 
 #endif // FILA_H_INCLUDED
