@@ -143,17 +143,17 @@ void imprimeFila(Fila* f)
     {
         if (q->info.prioridade == 1)
         {
-            printf("Tarefas de Prioridade Alta");
+            printf("Tarefa de Prioridade Alta");
         }
         if (q->info.prioridade == 2)
         {
-            printf("Tarefas de Prioridade Normal");
+            printf("Tarefa de Prioridade Normal");
         }
         if (q->info.prioridade == 3)
         {
-            printf("Tarefas de Prioridade Baixa");
+            printf("Tarefa de Prioridade Baixa");
         }
-        printf("Codigo: %d\n", q->info.codigo);
+        printf("\nCodigo: %d\n", q->info.codigo);
         printf("Nome: %s\n", q->info.nome);
         printf("Nome do Projeto: %s\n", q->info.nomeprojeto);
         printf("Data de Início: %d/%d/%d\n", q->info.inicio.dia, q->info.inicio.mes, q->info.inicio.ano);
