@@ -6,12 +6,14 @@
 
 // !!! ESTA É A VERSÃO AVANÇADA DO PROJETO !!!
 
-void aguardarEnter() {
+void aguardarEnter()
+{
     printf("Pressione Enter para continuar...");
     while (getchar() != '\n'); // Aguarda o usuário pressionar Enter
 }
 
-int retornaprioridade(Fila* minhaFilaA, Fila* minhaFilaB, Fila* minhaFilaC, int code, ListaConcluidas* l) {
+int retornaprioridade(Fila* minhaFilaA, Fila* minhaFilaB, Fila* minhaFilaC, int code, ListaConcluidas* l)
+{
     No* temp1 = minhaFilaA->ini;
     No* temp2 = minhaFilaB->ini;
     No* temp3 = minhaFilaC->ini;
@@ -19,29 +21,37 @@ int retornaprioridade(Fila* minhaFilaA, Fila* minhaFilaB, Fila* minhaFilaC, int 
 
 
 
-    while (temp1 != NULL) {
-        if (temp1->info.codigo == code) {
+    while (temp1 != NULL)
+    {
+        if (temp1->info.codigo == code)
+        {
             return 1;
         }
         temp1 = temp1->prox; // Avança para o próximo elemento
     }
 
-    while (temp2 != NULL) {
-        if (temp2->info.codigo == code) {
+    while (temp2 != NULL)
+    {
+        if (temp2->info.codigo == code)
+        {
             return 2;
         }
         temp2 = temp2->prox; // Avança para o próximo elemento
     }
 
-    while (temp3 != NULL) {
-        if (temp3->info.codigo == code) {
+    while (temp3 != NULL)
+    {
+        if (temp3->info.codigo == code)
+        {
             return 3;
         }
         temp3 = temp3->prox; // Avança para o próximo elemento
     }
 
-    while (temp4 != NULL) {
-        if (temp4->info2.codigo == code) {
+    while (temp4 != NULL)
+    {
+        if (temp4->info2.codigo == code)
+        {
             return temp4->info2.prioridade;
         }
         temp4 = temp4->prox2; // Avança para o próximo elemento
@@ -63,21 +73,22 @@ void menu()
     printf("|   [5] Listar tarefas pendentes                     \t|      \n");
     printf("|   [6] Listar tarefas concluidas                    \t|      \n");
     printf("|   [7] Listar tarefas concluidas com ou sem atrasos \t|      \n");
-    printf("|   [8] Sair do programa                             \t|      \n");
+    printf("|   [8] Listar todas as tarefas                      \t|      \n");
+    printf("|   [9] Sair do programa                             \t|      \n");
     printf(" ------------------------------------------------------- ");
     printf("\n\n -> Digite aqui sua opcao: ");
 }
 
 Tarefa LerTarefa()
 {
-/*FUNÇÃO QUE FARÁ A LEITURA DAS INFORMAÇÕES DE UMA NOVA TAREFA,
-FAZ TAMBÉM A COMPARAÇÃO DE DATAS PARA DETERMINAR SE UMA TAREFA ESTÁ
-ATRASADA OU EM DIA
+    /*FUNÇÃO QUE FARÁ A LEITURA DAS INFORMAÇÕES DE UMA NOVA TAREFA,
+    FAZ TAMBÉM A COMPARAÇÃO DE DATAS PARA DETERMINAR SE UMA TAREFA ESTÁ
+    ATRASADA OU EM DIA
 
-PARÂMETROS: NENHUM;
-RETORNO: t -> Tarefa;
+    PARÂMETROS: NENHUM;
+    RETORNO: t -> Tarefa;
 
-*/
+    */
     Tarefa t;
 
     printf("Digite o Codigo da tarefa: ");
@@ -85,9 +96,11 @@ RETORNO: t -> Tarefa;
 
     printf("Digite o nome da tarefa: ");
     scanf("%s", t.nome);
+    fflush(stdin);
 
     printf("Digite o nome do projeto: ");
     scanf("%s", t.nomeprojeto);
+    fflush(stdin);
 
     printf("Digite a data de Inicio (dia mes ano):\n ");
     scanf("%d %d %d", &t.inicio.dia, &t.inicio.mes, &t.inicio.ano);
@@ -102,11 +115,14 @@ RETORNO: t -> Tarefa;
 
     // Comparar a data de término com a data atual para definir o status
     if (t.termino.ano < (data_atual->tm_year + 1900) ||
-        (t.termino.ano == (data_atual->tm_year + 1900) && t.termino.mes < (data_atual->tm_mon + 1)) ||
-        (t.termino.ano == (data_atual->tm_year + 1900) && t.termino.mes == (data_atual->tm_mon + 1) &&
-         t.termino.dia < data_atual->tm_mday)) {
+            (t.termino.ano == (data_atual->tm_year + 1900) && t.termino.mes < (data_atual->tm_mon + 1)) ||
+            (t.termino.ano == (data_atual->tm_year + 1900) && t.termino.mes == (data_atual->tm_mon + 1) &&
+             t.termino.dia < data_atual->tm_mday))
+    {
         t.status = 1; // Tarefa atrasada
-    } else {
+    }
+    else
+    {
         t.status = 0; // Tarefa em dia
     }
 
@@ -118,14 +134,14 @@ RETORNO: t -> Tarefa;
 
 void modificarTarefa(Fila* minhaFilaA, int codigo)
 {
-/* FUNÇÃO UTILIZADA PARA MODIFICAR AS INFORMAÇÕES DE UMA TAREFA
+    /* FUNÇÃO UTILIZADA PARA MODIFICAR AS INFORMAÇÕES DE UMA TAREFA
 
-   PARÂMETROS: minhaFila -> fila de tarefas utilizada para armazenar as informações
-               codigo -> inteiro que será utilizado para procurar a tarefa a ser modificada
+       PARÂMETROS: minhaFila -> fila de tarefas utilizada para armazenar as informações
+                   codigo -> inteiro que será utilizado para procurar a tarefa a ser modificada
 
-   RETORNO: NENHUM
+       RETORNO: NENHUM
 
-*/
+    */
 
     No* temp1 = minhaFilaA->ini;
 
@@ -138,7 +154,7 @@ void modificarTarefa(Fila* minhaFilaA, int codigo)
     while (temp1 != NULL)
     {
         if (temp1->info.codigo == codigo)
-            {
+        {
             printf("Detalhes da Tarefa:\n");
             printf("Codigo: %d\n", temp1->info.codigo);
             printf("Nome: %s\n", temp1->info.nome);
@@ -161,11 +177,14 @@ void modificarTarefa(Fila* minhaFilaA, int codigo)
             scanf("%d %d %d", &temp1->info.termino.dia, &temp1->info.termino.mes, &temp1->info.termino.ano);
 
             if (temp1->info.termino.ano < (data_atual->tm_year + 1900) ||
-                (temp1->info.termino.ano == (data_atual->tm_year + 1900) && temp1->info.termino.mes < (data_atual->tm_mon + 1)) ||
-                (temp1->info.termino.ano == (data_atual->tm_year + 1900) && temp1->info.termino.mes == (data_atual->tm_mon + 1) &&
-                temp1->info.termino.dia < data_atual->tm_mday)) {
+                    (temp1->info.termino.ano == (data_atual->tm_year + 1900) && temp1->info.termino.mes < (data_atual->tm_mon + 1)) ||
+                    (temp1->info.termino.ano == (data_atual->tm_year + 1900) && temp1->info.termino.mes == (data_atual->tm_mon + 1) &&
+                     temp1->info.termino.dia < data_atual->tm_mday))
+            {
                 temp1->info.status = 1; // Tarefa atrasada
-            } else {
+            }
+            else
+            {
                 temp1->info.status = 0; // Tarefa em dia
             }
 
@@ -192,14 +211,14 @@ void modificarTarefa(Fila* minhaFilaA, int codigo)
 
 void ConcluiTarefa (Fila* minhaFilaA, ListaConcluidas** l, int codigo)
 {
-/* FUNÇÃO QUE RETIRA UMA TAREFA DA FILA PARA INSERÍ-LA EM UMA
-LISTA DE TAREFAS CONCLUIDAS, SEM ALTERAR O STATUS DE ATRASADA
+    /* FUNÇÃO QUE RETIRA UMA TAREFA DA FILA PARA INSERÍ-LA EM UMA
+    LISTA DE TAREFAS CONCLUIDAS, SEM ALTERAR O STATUS DE ATRASADA
 
-   PARÂMETROS: f -> fila de tarefas
-               l -> lista que irá receber as tarefas concluídas
+       PARÂMETROS: f -> fila de tarefas
+                   l -> lista que irá receber as tarefas concluídas
 
-   RETORNO: NENHUM
-*/
+       RETORNO: NENHUM
+    */
     time_t tempo_atual;
     struct tm data_atual;
     time(&tempo_atual);
@@ -210,17 +229,22 @@ LISTA DE TAREFAS CONCLUIDAS, SEM ALTERAR O STATUS DE ATRASADA
 
     No *aux1 = minhaFilaA->ini;
     No *aux2 = NULL;
-    while (aux1 != NULL) {
-        if (aux1->info.codigo == codigo) {
+    while (aux1 != NULL)
+    {
+        if (aux1->info.codigo == codigo)
+        {
             // Atualizar a data de término da tarefa com a data atual
             aux1->info.termino.dia = data_atual.tm_mday;
             aux1->info.termino.mes = data_atual.tm_mon + 1;
             aux1->info.termino.ano = data_atual.tm_year + 1900;
 
             // Remover a tarefa concluída da fila
-            if (aux2 == NULL) {
+            if (aux2 == NULL)
+            {
                 minhaFilaA->ini = aux1->prox;
-            } else {
+            }
+            else
+            {
                 aux2->prox = aux1->prox;
             }
 
@@ -249,13 +273,13 @@ LISTA DE TAREFAS CONCLUIDAS, SEM ALTERAR O STATUS DE ATRASADA
 
 void imprimeConcluida (ListaConcluidas* l)
 {
-/* FUNÇÃO PARA IMPRIMIR TODOS OS ELEMENTOS DE UMA LISTA
+    /* FUNÇÃO PARA IMPRIMIR TODOS OS ELEMENTOS DE UMA LISTA
 
-   PARÂMETROS: l -> lista de tarefas, tanto para concluidas como pendente
+       PARÂMETROS: l -> lista de tarefas, tanto para concluidas como pendente
 
-   RETORNO: NENHUM
+       RETORNO: NENHUM
 
-*/
+    */
     ListaConcluidas* q = l;
     printf("\n\t\t");
     printf("Lista pendente");
@@ -274,19 +298,23 @@ void imprimeConcluida (ListaConcluidas* l)
     printf("\n");
 }
 
-void ordenarListaPorPrioridade(ListaConcluidas** l) {
+void ordenarListaPorPrioridade(ListaConcluidas** l)
+{
     ListaConcluidas* atual;
     int trocou;
 
     if (*l == NULL)
         return;
 
-    do {
+    do
+    {
         trocou = 0;
         atual = *l;
 
-        while (atual->prox2 != NULL) {
-            if (atual->info2.prioridade > atual->prox2->info2.prioridade) {
+        while (atual->prox2 != NULL)
+        {
+            if (atual->info2.prioridade > atual->prox2->info2.prioridade)
+            {
                 Tarefa temp = atual->info2;
                 atual->info2 = atual->prox2->info2;
                 atual->prox2->info2 = temp;
@@ -294,7 +322,8 @@ void ordenarListaPorPrioridade(ListaConcluidas** l) {
             }
             atual = atual->prox2;
         }
-    } while (trocou);
+    }
+    while (trocou);
 }
 
 void atualizaTarefa(ListaConcluidas** l, Fila* f, int codigo)
@@ -305,47 +334,62 @@ void atualizaTarefa(ListaConcluidas** l, Fila* f, int codigo)
     ListaConcluidas *aux3 = *l;
     ListaConcluidas *aux4 = NULL;
 
-    while (aux != NULL) {
-        if (aux->info.codigo == codigo) {
+    while (aux != NULL)
+    {
+        if (aux->info.codigo == codigo)
+        {
             printf("Qual será o status dessa tarefa (0 para em dia, -1 para pendente): ");
             scanf("%d", &aux->info.status);
-            if (aux->info.status == -1) {
-                if (aux2 == NULL) {
+            if (aux->info.status == -1)
+            {
+                if (aux2 == NULL)
+                {
                     f->ini = aux->prox;
-                } else {
+                }
+                else
+                {
                     aux2->prox = aux->prox;
                 }
 
                 ListaConcluidas* novoPendente = insereListaConcluida(aux->info, *l);
-                if (novoPendente != NULL) {
+                if (novoPendente != NULL)
+                {
                     novoPendente->info2 = aux->info;
                     novoPendente->prox2 = *l;
                     *l = novoPendente;
                     printf("Tarefa concluída e movida para a lista de tarefas pendentes.\n");
-                } else {
+                }
+                else
+                {
                     printf("Erro ao alocar memória para o novo nodo concluído.\n");
                 }
-  // Retorna após mover a tarefa
+                // Retorna após mover a tarefa
             }
         }
         aux2 = aux;
         aux = aux->prox;
     }
 
-    while (aux3 != NULL) {
-        if (aux3->info2.codigo == codigo) {
+    while (aux3 != NULL)
+    {
+        if (aux3->info2.codigo == codigo)
+        {
             printf("Deseja retornar esta tarefa para a fila de tarefas (1 para sim e 0 para nao): ");
             scanf("%d", &option);
-            if (option == 1) {
+            if (option == 1)
+            {
                 Tarefa tarefa_temporaria = aux3->info2;
                 tarefa_temporaria.status = 0; // Defina o status como 0 (pendente)
                 InsereTarefa(f, tarefa_temporaria.codigo, tarefa_temporaria.nome, tarefa_temporaria.nomeprojeto,
                              tarefa_temporaria.inicio, tarefa_temporaria.termino, tarefa_temporaria.status, tarefa_temporaria.prioridade);
 
-                if (aux4 == NULL) {
+                if (aux4 == NULL)
+                {
                     // O elemento a ser removido o primeiro da lista
                     *l = aux3->prox2;
-                } else {
+                }
+                else
+                {
                     aux4->prox2 = aux3->prox2;
                 }
                 free(aux3);
@@ -387,134 +431,141 @@ int main()
     InsereTarefa(minhaFilaAlta, 2, "Tarefa 2", "Projeto 1", inicio2, termino2, 0, 1);
     InsereTarefa(minhaFilaNormal, 3, "Tarefa 3", "Projeto 2", inicio3, termino3, 0, 2);
     InsereTarefa(minhaFilaBaixa, 4, "Tarefa 4", "Projeto 2", inicio4, termino4, 0, 3);
-    do{
-    menu();
-    imprimeFila(minhaFilaAlta);
-    imprimeFila(minhaFilaNormal);
-    imprimeFila(minhaFilaBaixa);
-
-
-    scanf("%d",&opcao);
-    fflush(stdin);
-
-
-    switch(opcao)
+    do
     {
-    //ADICIONAR TAREFAS
-    case 1:
-        novaTarefa = LerTarefa();
-        if (novaTarefa.prioridade == 1)
+        menu();
+
+
+
+        scanf("%d",&opcao);
+        fflush(stdin);
+
+
+        switch(opcao)
         {
-            InsereTarefa(minhaFilaAlta, novaTarefa.codigo, novaTarefa.nome, novaTarefa.nomeprojeto,
-            novaTarefa.inicio, novaTarefa.termino, novaTarefa.status, novaTarefa.prioridade);
+        //ADICIONAR TAREFAS
+        case 1:
+            novaTarefa = LerTarefa();
+            if (novaTarefa.prioridade == 1)
+            {
+                InsereTarefa(minhaFilaAlta, novaTarefa.codigo, novaTarefa.nome, novaTarefa.nomeprojeto,
+                             novaTarefa.inicio, novaTarefa.termino, novaTarefa.status, novaTarefa.prioridade);
+            }
+
+            if (novaTarefa.prioridade == 2)
+            {
+                InsereTarefa(minhaFilaNormal, novaTarefa.codigo, novaTarefa.nome, novaTarefa.nomeprojeto,
+                             novaTarefa.inicio, novaTarefa.termino, novaTarefa.status, novaTarefa.prioridade);
+            }
+
+            if (novaTarefa.prioridade == 3)
+            {
+                InsereTarefa(minhaFilaBaixa, novaTarefa.codigo, novaTarefa.nome, novaTarefa.nomeprojeto,
+                             novaTarefa.inicio, novaTarefa.termino, novaTarefa.status, novaTarefa.prioridade);
+            }
+            break;
+
+        //MODIFIICAR TAREFAS
+        case 2:
+            printf("Digite o codigo da tarefa que deseja modificar: ");
+            scanf("%d", &codigo);
+            prioridade = retornaprioridade(minhaFilaAlta, minhaFilaNormal, minhaFilaBaixa, codigo, pendente);
+            if (prioridade == 1)
+            {
+                modificarTarefa(minhaFilaAlta, codigo);
+            }
+
+            if (prioridade == 2)
+            {
+                modificarTarefa(minhaFilaNormal, codigo);
+            }
+
+            if (prioridade == 3)
+            {
+                modificarTarefa(minhaFilaBaixa, codigo);
+            }
+
+            break;
+
+        //CONCLUIR TAREFAS, COLOCAR NA LISTA CONCLUIDA
+        case 3:
+            printf("Digite o codigo da tarefa que deseja concluir: ");
+            scanf("%d", &codigo);
+            prioridade = retornaprioridade(minhaFilaAlta, minhaFilaNormal, minhaFilaBaixa, codigo, pendente);
+            if (prioridade == 1)
+            {
+                ConcluiTarefa(minhaFilaAlta, &concluida, codigo);
+            }
+
+            if (prioridade == 2)
+            {
+                ConcluiTarefa(minhaFilaNormal, &concluida, codigo);
+            }
+
+            if (prioridade == 3)
+            {
+                ConcluiTarefa(minhaFilaBaixa, &concluida, codigo);
+            }
+
+            break;
+
+        //ATUALIZAR TAREFAS, COLOCAR NA LISTA PENDENTE DEPENDENDO DO STATUS
+        case 4:
+            printf("Digite o codigo da tarefa que deseja atualizar o status: ");
+            scanf("%d", &codigo);
+            prioridade = retornaprioridade(minhaFilaAlta, minhaFilaNormal, minhaFilaBaixa, codigo, pendente);
+            if (prioridade == 1)
+            {
+                atualizaTarefa(&pendente, minhaFilaAlta, codigo);
+            }
+
+            if (prioridade == 2)
+            {
+                atualizaTarefa(&pendente, minhaFilaNormal, codigo);
+            }
+
+            if (prioridade == 3)
+            {
+                atualizaTarefa(&pendente, minhaFilaBaixa, codigo);
+            }
+            ordenarListaPorPrioridade(&pendente);
+
+            break;
+
+        //IMPRIMIR TODAS AS TAREFAS PENDENTES
+        case 5:
+            imprimeConcluida(pendente);
+            aguardarEnter();
+            break;
+
+        //IMPRIMIR TODAS AS TAREFAS CONCLUIDAS
+        case 6:
+            imprimeConcluida(concluida);
+            aguardarEnter();
+            break;
+
+        //IMPRIME DE FORMA SEPARADA AS TAREFAS CONCLUIDAS
+        case 7:
+            VerificaStatus(concluida);
+            aguardarEnter();
+            break;
+
+        //FINALIZA O PROGRAMA
+        case 8:
+            imprimeFila(minhaFilaAlta);
+            imprimeFila(minhaFilaNormal);
+            imprimeFila(minhaFilaBaixa);
+            aguardarEnter();
+            break;
+
+        case 9:
+            break;
+
+        default:
+            printf("Opcao Invalida");
         }
-
-        if (novaTarefa.prioridade == 2)
-        {
-            InsereTarefa(minhaFilaNormal, novaTarefa.codigo, novaTarefa.nome, novaTarefa.nomeprojeto,
-            novaTarefa.inicio, novaTarefa.termino, novaTarefa.status, novaTarefa.prioridade);
-        }
-
-        if (novaTarefa.prioridade == 3)
-        {
-            InsereTarefa(minhaFilaBaixa, novaTarefa.codigo, novaTarefa.nome, novaTarefa.nomeprojeto,
-            novaTarefa.inicio, novaTarefa.termino, novaTarefa.status, novaTarefa.prioridade);
-        }
-        break;
-
-    //MODIFIICAR TAREFAS
-    case 2:
-        printf("Digite o codigo da tarefa que deseja modificar: ");
-        scanf("%d", &codigo);
-        prioridade = retornaprioridade(minhaFilaAlta, minhaFilaNormal, minhaFilaBaixa, codigo, pendente);
-        if (prioridade == 1)
-        {
-            modificarTarefa(minhaFilaAlta, codigo);
-        }
-
-        if (prioridade == 2)
-        {
-            modificarTarefa(minhaFilaNormal, codigo);
-        }
-
-        if (prioridade == 3)
-        {
-            modificarTarefa(minhaFilaBaixa, codigo);
-        }
-
-        break;
-
-    //CONCLUIR TAREFAS, COLOCAR NA LISTA CONCLUIDA
-    case 3:
-        printf("Digite o codigo da tarefa que deseja concluir: ");
-        scanf("%d", &codigo);
-        prioridade = retornaprioridade(minhaFilaAlta, minhaFilaNormal, minhaFilaBaixa, codigo, pendente);
-        if (prioridade == 1)
-        {
-            ConcluiTarefa(minhaFilaAlta, &concluida, codigo);
-        }
-
-        if (prioridade == 2)
-        {
-            ConcluiTarefa(minhaFilaNormal, &concluida, codigo);
-        }
-
-        if (prioridade == 3)
-        {
-            ConcluiTarefa(minhaFilaBaixa, &concluida, codigo);
-        }
-
-        break;
-
-    //ATUALIZAR TAREFAS, COLOCAR NA LISTA PENDENTE DEPENDENDO DO STATUS
-    case 4:
-        printf("Digite o codigo da tarefa que deseja atualizar o status: ");
-        scanf("%d", &codigo);
-        prioridade = retornaprioridade(minhaFilaAlta, minhaFilaNormal, minhaFilaBaixa, codigo, pendente);
-        if (prioridade == 1)
-        {
-            atualizaTarefa(&pendente, minhaFilaAlta, codigo);
-        }
-
-        if (prioridade == 2)
-        {
-            atualizaTarefa(&pendente, minhaFilaNormal, codigo);
-        }
-
-        if (prioridade == 3)
-        {
-            atualizaTarefa(&pendente, minhaFilaBaixa, codigo);
-        }
-        ordenarListaPorPrioridade(&pendente);
-
-        break;
-
-    //IMPRIMIR TODAS AS TAREFAS PENDENTES
-    case 5:
-        imprimeConcluida(pendente);
-        aguardarEnter();
-        break;
-
-    //IMPRIMIR TODAS AS TAREFAS CONCLUIDAS
-    case 6:
-        imprimeConcluida(concluida);
-        aguardarEnter();
-        break;
-
-    //IMPRIME DE FORMA SEPARADA AS TAREFAS CONCLUIDAS
-    case 7:
-        VerificaStatus(concluida);
-        aguardarEnter();
-        break;
-
-    //FINALIZA O PROGRAMA
-    case 8:
-        break;
-
-    default:
-        printf("Opcao Invalida");
     }
-    }while (opcao != 8);
+    while (opcao != 9);
 
     printf("\n Fim do Programa!!");
     return 0;
