@@ -4,7 +4,7 @@
 #include <windows.h>
 #include "FILA.h"
 
-// !!! ESTA É A VERSÃO AVANÇADA DO PROJETO !!!
+// !!! ESTA É A VERSÃO AVANÇADA DO PROJETO !!! ///
 
 void aguardarEnter()
 {
@@ -95,17 +95,19 @@ Tarefa LerTarefa()
     scanf("%d", &t.codigo);
 
     printf("Digite o nome da tarefa: ");
-    scanf("%s", t.nome);
-    fflush(stdin);
+    getchar();
+    fgets(t.nome, 30, stdin);
+    t.nome[strlen(t.nome) - 1] = '\0';  // Remove o caractere de nova linha (\n)
+
 
     printf("Digite o nome do projeto: ");
-    scanf("%s", t.nomeprojeto);
-    fflush(stdin);
+    fgets(t.nomeprojeto, 30, stdin);
+    t.nomeprojeto[strlen(t.nomeprojeto) - 1] = '\0';  // Remove o caractere de nova linha (\n)
 
-    printf("Digite a data de Inicio (dia mes ano):\n ");
+    printf("Digite a data de Inicio (dia mes ano):\n");
     scanf("%d %d %d", &t.inicio.dia, &t.inicio.mes, &t.inicio.ano);
 
-    printf("Digite a data de termino (dia mes ano):\n ");
+    printf("Digite a data de termino (dia mes ano):\n");
     scanf("%d %d %d", &t.termino.dia, &t.termino.mes, &t.termino.ano);
 
     time_t tempo_atual;
@@ -126,7 +128,7 @@ Tarefa LerTarefa()
         t.status = 0; // Tarefa em dia
     }
 
-    printf("Digite a prioridade desta tarefa (1 = alta, 2 = normal, 3 = baixa):\n ");
+    printf("Digite a prioridade desta tarefa (1 = alta, 2 = normal, 3 = baixa):\n");
     scanf("%d", &t.prioridade);
 
     return t;
@@ -165,10 +167,14 @@ void modificarTarefa(Fila* minhaFilaA, int codigo)
 
             // Modificação dos dados da tarefa
             printf("Digite o novo nome da tarefa: ");
-            scanf("%s", temp1->info.nome);
+            getchar();
+            fgets(temp1->info.nome, 30, stdin);
+            temp1->info.nome[strlen(temp1->info.nome) - 1] = '\0';  // Remove o caractere de nova linha (\n)
 
             printf("Digite o nome do projeto: ");
-            scanf("%s", temp1->info.nomeprojeto);
+            fgets(temp1->info.nomeprojeto, 30, stdin);
+            temp1->info.nomeprojeto[strlen(temp1->info.nomeprojeto) - 1] = '\0';  // Remove o caractere de nova linha (\n)
+
 
             printf("Digite a nova data de Inicio (dia mes ano): ");
             scanf("%d %d %d", &temp1->info.inicio.dia, &temp1->info.inicio.mes, &temp1->info.inicio.ano);
@@ -255,13 +261,13 @@ void ConcluiTarefa (Fila* minhaFilaA, ListaConcluidas** l, int codigo)
                 novoConcluida->info2 = aux1->info;
                 novoConcluida->prox2 = *l;
                 *l = novoConcluida;
-                printf("Tarefa concluída e movida para a lista de tarefas concluídas.\n");
+                printf("Tarefa concluida e movida para a lista de tarefas concluidas.\n");
 
             }
 
             else
             {
-                printf("Erro ao alocar memória para o novo nodo concluído.\n");
+                printf("Erro ao alocar memoria para o novo nodo concluido.\n");
             }
         }
         aux2 = aux1;
@@ -281,15 +287,13 @@ void imprimeConcluida (ListaConcluidas* l)
 
     */
     ListaConcluidas* q = l;
-    printf("\n\t\t");
-    printf("Lista pendente");
     while (q != NULL)
     {
-        printf("Codigo: %d\n", q->info2.codigo);
+        printf("\nCodigo: %d\n", q->info2.codigo);
         printf("Nome: %s\n", q->info2.nome);
         printf("Nome do Projeto: %s\n", q->info2.nomeprojeto);
-        printf("Data de Início: %d/%d/%d\n", q->info2.inicio.dia, q->info2.inicio.mes, q->info2.inicio.ano);
-        printf("Data de Término: %d/%d/%d\n", q->info2.termino.dia, q->info2.termino.mes, q->info2.termino.ano);
+        printf("Data de Inicio: %d/%d/%d\n", q->info2.inicio.dia, q->info2.inicio.mes, q->info2.inicio.ano);
+        printf("Data de Termino: %d/%d/%d\n", q->info2.termino.dia, q->info2.termino.mes, q->info2.termino.ano);
         printf("Status: %d\n", q->info2.status);
         printf("Prioridade: %d\n", q->info2.prioridade);
         printf("\n");
@@ -338,7 +342,7 @@ void atualizaTarefa(ListaConcluidas** l, Fila* f, int codigo)
     {
         if (aux->info.codigo == codigo)
         {
-            printf("Qual será o status dessa tarefa (0 para em dia, -1 para pendente): ");
+            printf("Qual sera o status dessa tarefa (0 para em dia, -1 para pendente): ");
             scanf("%d", &aux->info.status);
             if (aux->info.status == -1)
             {
@@ -534,12 +538,16 @@ int main()
 
         //IMPRIMIR TODAS AS TAREFAS PENDENTES
         case 5:
+            printf("\n\t\t");
+            printf("Lista pendente");
             imprimeConcluida(pendente);
             aguardarEnter();
             break;
 
         //IMPRIMIR TODAS AS TAREFAS CONCLUIDAS
         case 6:
+            printf("\n\t\t");
+            printf("Lista concluida");
             imprimeConcluida(concluida);
             aguardarEnter();
             break;
