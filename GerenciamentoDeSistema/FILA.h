@@ -156,8 +156,8 @@ void imprimeFila(Fila* f)
         printf("\nCodigo: %d\n", q->info.codigo);
         printf("Nome: %s\n", q->info.nome);
         printf("Nome do Projeto: %s\n", q->info.nomeprojeto);
-        printf("Data de Início: %d/%d/%d\n", q->info.inicio.dia, q->info.inicio.mes, q->info.inicio.ano);
-        printf("Data de Término: %d/%d/%d\n", q->info.termino.dia, q->info.termino.mes, q->info.termino.ano);
+        printf("Data de Inicio: %d/%d/%d\n", q->info.inicio.dia, q->info.inicio.mes, q->info.inicio.ano);
+        printf("Data de Termino: %d/%d/%d\n", q->info.termino.dia, q->info.termino.mes, q->info.termino.ano);
         printf("Status: %d\n", q->info.status);
         printf("Prioridade: %d\n", q->info.prioridade);
         printf("\n");
@@ -169,7 +169,7 @@ void VerificaStatus (ListaConcluidas* f)
 {
     ListaConcluidas *temp = f;
 
-    printf("\nCódigo das Tarefas com atraso: ");
+    printf("\nCodigo das Tarefas com atraso: ");
     while(temp != NULL)
     {
 
@@ -180,7 +180,7 @@ void VerificaStatus (ListaConcluidas* f)
         temp = temp->prox2;
     }
 
-    printf("\nCódigo das Tarefas em dia: ");
+    printf("\nCodigo das Tarefas em dia: ");
     ListaConcluidas *aux = f;
 
     while(aux != NULL)
